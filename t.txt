@@ -3,10 +3,10 @@ module tff(input clk,t,p,c,output reg q);
 
 always @ (posedge clk)begin
     if(~p && c)
-        q <= 0;
-    else if(p &&~c)
         q <= 1;
-    else if(~p && ~c)begin
+    else if(p &&~c)
+        q <= 0;
+    else if(p && c)begin
     if(t) q<=~q;
     else q<=q;
     end
