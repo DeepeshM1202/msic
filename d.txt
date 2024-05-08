@@ -3,10 +3,10 @@ module dff(input clk,d,p,c,output reg q);
 
 always @ (posedge clk)begin
     if(~p && c)
-        q <= 0;
-    else if(p &&~c)
         q <= 1;
-    else if(~p && ~c)
+    else if(p &&~c)
+        q <= 0;
+    else if(p && c)
         q<=d;
 end
                 
