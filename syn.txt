@@ -1,0 +1,35 @@
+module syn(input clk,m,p,c,output wire [3:0] Q);
+ assign x1=((m*1*Q[0])+(~m*1*~Q[0]));
+ assign x2=((m*x1*Q[1])+(~m*x1*~Q[1]));
+ assign x3= ((m*x2*Q[2])+(~m*x2*~Q[2]));
+ T sm(clk,x1,x1,Q[1],m,p,c);
+ T sr(clk,1,1,Q[0],m,p,c);
+ T ir(clk,x2,x2,Q[2],m,p,c);
+ T am(clk,x3,x3,Q[3],m,p,c);
+ endmodule
+
+
+
+module T(clk,j,k,q,m,p,c);
+input clk,j,k,m,p,c;
+output reg q;
+reg qbar;
+initial
+begin
+q=1'b0;
+end
+always@(negedge clk)
+       begin
+          if(p==0 && c==1)
+            q=0;
+          else if(p==1 && c==0)
+           q=1;
+           else if(p==0 && c==0)
+           begin
+              if(j == 0)         
+                q = q;
+              else if(j == 1)
+                q = ~q;
+           end
+end
+endmodule

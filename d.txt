@@ -1,0 +1,38 @@
+module dff(input clk,d,p,c,output reg q);
+
+
+always @ (posedge clk)begin
+    if(~p && c)
+        q <= 0;
+    else if(p &&~c)
+        q <= 1;
+    else if(~p && ~c)
+        q<=d;
+end
+                
+endmodule
+
+module dtb;
+reg clk,d,p,c;
+wire q;
+dff tb(clk,d,p,c,q); 
+
+initial begin
+  clk=0;
+    
+end 
+initial begin 
+ p<=0;c<=1; d <= 0;
+ #10 p<=1;c<=0; d <= 0;
+ #10 p<=0; c<=0; d <= 1;
+ #10 d <= 0;
+ #10 d <= 0;
+ #10 d <= 1;
+ #10 d <= 1;
+ #10 d <= 0;
+ #10 d <= 1;
+ #10 d <= 0;
+ #10 d <= 1;
+end 
+always #2 clk = ~clk;
+endmodule

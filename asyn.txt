@@ -1,0 +1,43 @@
+module asyn(input clk,m,output wire [3:0] q);
+  wire c1;wire c2; wire c3; wire c4;
+      T sm(clk,1,q[0],m,c1);
+      T sr(c1,1,q[1],m,c2);
+      T ir(c2,1,q[2],m,c3);
+      T am(c3,1,q[3],m,c4);
+endmodule
+
+
+module T(clk,T,Q,m,clkn);
+   input wire clk, T,m;
+   output reg Q,clkn;
+  initial
+   begin
+      Q<=1'b0;
+   end
+   assign  D= T ^ Q;
+      always @(negedge clk)
+       begin
+           Q=D;
+           if(m==1)
+            clkn=Q;
+           else
+            clkn=~Q; 
+       end
+endmodule
+
+module asyntb;
+reg clk,m;
+wire [3:0]Q;
+asyn tb(clk,m,Q); 
+
+initial begin
+  clk=0;
+end 
+initial begin 
+ m=0;
+ #30 m=1;
+ #40 m=0;
+ #50 m=1;
+end 
+always #2 clk = ~clk;
+endmodule
