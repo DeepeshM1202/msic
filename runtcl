@@ -1,0 +1,21 @@
+read_libs /home/install/FOUNDRY/digital/45nm/LIBS/lib/max/slow.lib
+
+read_hdl {./syn.v}
+
+
+elaborate
+
+read_sdc ./constraints_top.sdc
+
+syn_generic
+syn_map
+syn_opt
+
+write_hdl > counter_netlist.v
+write_sdc > output_sdc.sdc
+
+gui_show
+
+report power > counter_power.rep
+report area > counter_cell.rep
+report timing > counter_timing.rep
